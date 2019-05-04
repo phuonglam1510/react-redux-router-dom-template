@@ -1,0 +1,13 @@
+$primary-color: #0a6ef3;
+$lightblue-color: #8ebdfa;
+$gray-color: #979797;
+$gray2-color: #b3b3b3;
+$dark-gray-blue-color: #2c405a;
+$lightgray-color: #f1f1f1;
+$darkgray-color: #7e8692;
+$red-color: #bb0000;
+$dust-color: #3f536e;
+
+
+:export { primaryColor: $primary-color; grayColor: $gray-color; redColor: $red-color; 
+    lightGrayColor:$lightgray-color; grayBlueColor: $dark-gray-blue-color }

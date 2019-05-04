@@ -1,0 +1,22 @@
+@import '../Index.scss'; 
+
+.time-picker {
+    position: absolute;
+    z-index: 10000;
+    top: 100%;
+    left: 0px;
+    opacity:0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 300ms, opacity 300ms;
+    &.visible {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    .item {
+        padding: 10px;
+        color: $darkgray-color;
+        font-size: 16px;
+        font-weight: bold;
+    }
+}

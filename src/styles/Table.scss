@@ -1,0 +1,34 @@
+@import './Index.scss';
+
+.table-container {
+    width: 100%;
+    border-collapse: collapse;
+    tr.header {
+        border-bottom: 1px solid $lightgray-color;
+        th {
+            padding: 15px 0px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: 0.9px;
+            color: $dust-color;
+            opacity: 0.8;
+        }
+    }
+    tr {
+        td:first-child,th:first-child {
+            padding-left: 30px;
+        }
+    }
+    td {
+        padding: 10px 0px;
+        font-size: 13px;
+        line-height: 1.83;
+        color: $dust-color;
+    }
+    .row:hover {
+        cursor: pointer;
+        background-color: $lightgray-color;
+    }
+}

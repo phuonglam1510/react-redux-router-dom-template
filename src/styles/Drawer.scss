@@ -1,0 +1,52 @@
+@import './Colors.scss';
+
+.drawer-container {
+    height: calc(100% - 40px);
+    padding: 20px;
+    ul {
+        padding: 0px;
+        list-style: none;
+    }
+    .company-name {
+        color: $gray-color;
+        font-size: 18px;
+        text-transform: uppercase;
+        font-style: italic;
+        margin-top: 10px;
+        font-weight: 200;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .main-menu {
+        li {
+            padding: 5px 0px;
+        }
+    }
+    li {
+        padding: 2px 0px;
+        a {
+            text-decoration: none;
+            color: black;
+            font-size: 13px;
+
+            &.active {
+                color: $primary-color;
+            }
+        }
+        &:hover {
+            a {
+                color: $primary-color;
+            }
+        }
+    }
+    h3 {
+        font-size: 15px;
+        color: $darkgray-color;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    ul {
+        margin-top: 0px;
+        margin-bottom: 20px;
+    }
+}

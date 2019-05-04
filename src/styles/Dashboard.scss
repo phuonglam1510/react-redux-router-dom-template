@@ -1,0 +1,15 @@
+@import './Index.scss'; 
+
+.dashboard-page {
+    .card {
+        .content{
+            >.text {
+               @extend %big-blue-number;
+            }
+        }
+    }
+    
+    
+}
+
+

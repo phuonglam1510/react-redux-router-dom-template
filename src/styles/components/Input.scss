@@ -1,0 +1,25 @@
+@import '../Index.scss';
+
+.input-container {
+    flex-direction: column;
+    display: flex;
+    input {
+        border: $lightblue-color 1px solid;
+        border-radius: 3px;
+        transition: all ease-in-out 0.5s;
+        font-size: 14px;
+        padding: 10px;
+        outline: none;
+        box-shadow: 0px 1px 3px #e0e0e0;
+    }
+    input:active,input:hover {
+        border: $primary-color 1px solid;
+    }
+    label {
+        @extend %form-label;
+        .require {
+            color: $red-color;
+            margin-left: 4px;
+        }
+    }
+}

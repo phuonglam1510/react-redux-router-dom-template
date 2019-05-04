@@ -1,0 +1,12 @@
+@import '../Index.scss'; 
+
+
+.btn {
+    border-radius: $border-radius;
+    color: white;
+    text-transform: capitalize;
+    background-color: $primary-color;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 14px;
+}

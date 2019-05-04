@@ -1,0 +1,19 @@
+
+%big-blue-number {
+    font-size: 30px;
+    color: $primary-color;
+    font-weight: bold;
+  }
+  
+%box-shadow {
+  box-shadow: 0px 2px 3px 0px #a2a2a2;
+}
+  
+%form-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: $darkgray-color;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+  
