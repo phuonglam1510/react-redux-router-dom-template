@@ -1,14 +1,12 @@
 
 import { combineReducers } from 'redux';
 
-import auctioneer from './auctioneerReducer'
-import auction from './auctionReducer'
 import auth from './authReducer'
+import user from './userReducer'
 
 const rootReducer = combineReducers({
     auth,
-    auctioneer,
-    auction
+    user
 });
 
 export default rootReducer;

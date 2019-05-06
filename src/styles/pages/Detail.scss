@@ -1,0 +1,12 @@
+@import '../Index.scss';
+
+.detail-page {
+    .back-btn {
+        .flexbox {
+            cursor: pointer;
+            &:hover {
+                background-color: $lightgray-color;
+            }
+        }
+    }
+}

@@ -6,16 +6,16 @@ import '../styles/Flexbox.scss';
 
 class Flexbox extends Component {
     render() {
-        const { row, spaceBetween, padding, wrapperStyle } = this.props;
+        const { row, spaceBetween, padding, containerStyle, flexStart } = this.props;
         return (
             <div className="flexbox" style={{
                 display: 'flex',
                 flexDirection: row ? 'row' : 'column',
-                justifyContent: spaceBetween ? 'space-between' : 'center',
+                justifyContent: spaceBetween ? 'space-between' : (flexStart ? 'flex-start' : 'center'),
                 alignItems: 'center',
                 padding: padding || 0,
                 flexWrap: 'wrap',
-                ...wrapperStyle
+                ...containerStyle
             }}>
                 {this.props.children}
             </div>

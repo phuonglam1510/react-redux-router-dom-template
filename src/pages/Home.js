@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dashboard from './Dashboard';
-import Account from './Account';
 import { Route, Link, Switch } from "react-router-dom";
 import Header from '../components/Header';
 import Flexbox from '../components/Flexbox';
@@ -13,14 +12,9 @@ import { ROUTES } from '../constants/ROUTES';
 import EventEmitter from '../EventEmitter';
 import { withRouter } from 'react-router-dom';
 import { logout } from '../actions/authAction';
-import { detail } from '../actions/auctioneerAction';
-import NewAuction from './NewAuction';
-import UpcomingAuctions from './UpcomingAuctions';
-import AwaitingResults from './AwaitingResults';
-import SubmitResults from './SubmitResult';
-import Analytics from './Analytics';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import AuctionDetail from './AuctionDetail';
+import Detail from './Detail';
+import About from './About';
 
 class Home extends Component {
     constructor(props) {
@@ -33,7 +27,7 @@ class Home extends Component {
             props.logout();
         });
 
-        this.props.detail();
+        // this.props.detail();
     }
     componentWillUnmount() {
         console.log("unsubscribe...");
@@ -56,24 +50,17 @@ class Home extends Component {
                     >
                         <Switch location={location}>
                             <PrivateRoute className={transition === 'out' ? "out-transition" : (transition === 'in' ? "in-transition" : "")}
-                                exact path={ROUTES.AWAITING_RESULTS + '/:auctionId'} component={SubmitResults} />
-                            <PrivateRoute className={transition === 'out' ? "out-transition" : (transition === 'in' ? "in-transition" : "")}
-                                exact path={ROUTES.UPCOMMING_AUCTION + '/:auctionId'} component={AuctionDetail} />
+                                exact path={ROUTES.DETAIL + '/:username'} component={Detail} />
                             <Route render={() => (
                                 <div className={transition === 'out' ? "out-transition" :
                                     (transition === 'in' ? "in-transition" : "")}>
-                                    <Flexbox row spaceBetween wrapperStyle={{ alignItems: 'stretch', backgroundColor: styles.lightGrayColor }}>
+                                    <Flexbox row spaceBetween containerStyle={{ alignItems: 'stretch', backgroundColor: styles.lightGrayColor }}>
                                         < div style={{ flex: 1, height: 'calc(100vh - 70px)' }}>
                                             <Drawer></Drawer>
                                         </div>
                                         <div style={{ flex: 4 }}>
-                                            <PrivateRoute exact path={ROUTES.NEW_AUCTION} component={NewAuction} />
                                             <PrivateRoute exact path={ROUTES.DASHBOARD} component={Dashboard} />
-                                            <PrivateRoute exact path={ROUTES.UPCOMMING_AUCTION} component={UpcomingAuctions} />
-                                            <PrivateRoute exact path={ROUTES.ANALYTICS} component={Analytics} />
-                                            <PrivateRoute exact path={ROUTES.AWAITING_RESULTS} component={AwaitingResults} />
-                                            <PrivateRoute exact path={ROUTES.PUBLISHED_AUCTION} component={AwaitingResults} />
-                                            <PrivateRoute path={ROUTES.ACCOUNT} component={Account} />
+                                            <PrivateRoute path={ROUTES.ABOUT} component={About} />
 
                                         </div>
                                     </Flexbox>
@@ -95,7 +82,7 @@ export function mapStateToProps(state) {
 export function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         logout,
-        detail
+        // detail
     }, dispatch)
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

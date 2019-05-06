@@ -1,13 +1,9 @@
 import auth from './authApi';
-import auction from './auctionApi';
-import auctioneer from './auctioneerApi';
-import analytic from './analyticApi';
+import user from './userApi';
 
 const thunkDependencies = {
     auth,
-    auction,
-    auctioneer,
-    analytic
+    user
 };
 
 export default thunkDependencies;

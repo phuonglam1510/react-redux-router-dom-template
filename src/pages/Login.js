@@ -42,7 +42,7 @@ class Login extends Component {
                         <Input value={email} name='email' onChange={this.handleChange} label={"EMAIL ADDRESS"}></Input>
                         <Input password value={password} name='password' onChange={this.handleChange} label={"PASSWORD"}></Input>
                         {message.length > 0 && <div style={{ color: styles.redColor, marginTop: 10 }}>{message}</div>}
-                        <Flexbox wrapperStyle={{ marginTop: 10 }} row spaceBetween>
+                        <Flexbox containerStyle={{ marginTop: 10 }} row spaceBetween>
                             <a>Forgot Password?</a>
                             <Button loading={loading} onClick={this.login} text="LOGIN"></Button>
                         </Flexbox>

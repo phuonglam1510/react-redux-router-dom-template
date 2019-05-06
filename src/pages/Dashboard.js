@@ -1,145 +1,62 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Flexbox from '../components/Flexbox';
 import Card from '../components/Card';
-import { loadDashboard } from '../actions/auctioneerAction';
-import { listAwaitingAuctions } from '../actions/auctionAction';
 import { Route, Link, withRouter } from "react-router-dom";
 import ReactPlaceholder from 'react-placeholder';
 import _ from 'lodash';
 import '../styles/Dashboard.scss';
-import styles from '../styles/Colors.scss';
-import Button from '../components/Button';
-import Label from '../components/Label';
-import Chart from '../components/LineChart';
-import CompletedAuction from '../components/CompletedAuction';
-import LoadingAuction from '../components/LoadingAuction';
-import { overviewAnalyticsByTime } from '../apis/analyticApi';
-import { apiSerializer } from '../helpers/apiSerializer';
-import { TIME_PERIOD } from '../constants/ANALYTIC';
-import Dropdown from '../components/Dropdown';
+import Flexbox from '../components/Flexbox';
+import { listUsers } from '../actions/userAction';
 import { ROUTES } from '../constants/ROUTES';
-
-const DashboardCard = ({ loading, header, value, lastOne }) => {
-    return (
-        <Card shadow noPadding containerStyle={{ flex: 1, marginRight: lastOne ? 0 : 15 }}>
-            <div className="header">
-                <h1>{header}</h1>
-            </div>
-            <div className="content">
-                <ReactPlaceholder showLoadingAnimation={true} type='text' rows={1} ready={!loading}>
-                    <div className="text">{value}</div>
-                </ReactPlaceholder>
-            </div>
-        </Card>
-    )
-}
-
-const timeRanges = [
-    { text: 'This Month', value: TIME_PERIOD.THIS_MONTH },
-    { text: 'This Week', value: TIME_PERIOD.THIS_WEEK },
-    { text: 'Last Month', value: TIME_PERIOD.LAST_MONTH },
-    { text: 'Last Week', value: TIME_PERIOD.LAST_WEEK }
-]
 
 class Dashboard extends Component {
     state = {
-        dashboards: [{
-            header: 'Total auction clicks',
-            value: 'auction_click'
-        }, {
-            header: 'Total lot impressions',
-            value: 'lot_impression'
-        }, {
-            header: 'Total auctions',
-            value: 'total_auctions'
-        }, {
-            header: 'Followers',
-            value: 'follower'
-        }],
-        chartData: [],
-        selectedRange: timeRanges[0]
     }
     componentDidMount() {
-        console.log('dashboard page');
-        this.props.loadDashboard();
-        this.props.listAwaitingAuctions();
-        this.loadChart();
+        this.props.listUsers();
     }
-    detailAuction = ({ auction }) => {
+    detail = (user) => {
         const { history } = this.props;
-        history.push(ROUTES.AWAITING_RESULTS + '/' + auction.id, { transition: 'in', from: { text: 'Dashboard', route: ROUTES.DASHBOARD } })
-    }
-    loadChart = async () => {
-        this.setState({ loading: true });
-        try {
-            const rs = await overviewAnalyticsByTime(this.state.selectedRange.value);
-            const result = apiSerializer(rs);
-            this.setState({ chartData: result, loading: false });
-        } catch (error) {
-            console.log(error);
-            this.setState({ message: error.message, loading: false });
-        }
-    }
-    onChangeTimeRange = ({ item }) => {
-        this.setState({ selectedRange: item }, () => {
-            this.loadChart();
-        });
+        history.push(ROUTES.DETAIL + "/" + user.login, { transition: 'in' });
     }
     render() {
-        const { summary, loading, loadingCompleted, awaitingAuctions } = this.props;
-        const { dashboards, chartData, selectedRange } = this.state;
+        const { loading, users, refreshing, message } = this.props;
         return (
             <div className="dashboard-page" style={{ padding: 20 }}>
                 <Flexbox row spaceBetween>
-                    <h1>Welcome ,Peter!</h1>
-                    <Link to="/how-it-work">How Tractor Zoom Works</Link>
+                    <h1>List users</h1>
+                    <div>
+                        {refreshing && <div style={{ fontStyle: 'italic', fontWeight: 'bold' }}>Refreshing...</div>}
+                    </div>
                 </Flexbox>
                 <hr />
-                <Flexbox wrapperStyle={{ marginBottom: 15 }} row spaceBetween>
-                    {dashboards.map((dashboard, index) => (
-                        <DashboardCard header={dashboard.header} lastOne={index === dashboards.length - 1} value={summary[dashboard.value] || 1200} loading={loading}></DashboardCard>
-                    ))}
-                </Flexbox>
-                <Card shadow noPadding containerStyle={{ flex: 1, }}>
-                    <div className="header">
-                        <Flexbox row spaceBetween>
-                            <div>
-                                <Dropdown onChanged={this.onChangeTimeRange} items={timeRanges} selected={selectedRange}></Dropdown>
-                            </div>
-                            <Flexbox row>
-                                <Flexbox row>
-                                    <Label containerStyle={{ marginLeft: 10, marginRight: 5 }} dot background={styles.primaryColor}></Label>
-                                    <span style={{ fontSize: 12 }}>Auction Impressions</span>
-                                </Flexbox>
-                                <Flexbox row>
-                                    <Label containerStyle={{ marginLeft: 10, marginRight: 5 }} dot background='green'></Label>
-                                    <span style={{ fontSize: 12 }}>Auction Clicks</span>
-                                </Flexbox>
-                            </Flexbox>
+                {loading ?
+                    _.range(0, 3).map(n => (<Card noPadding shadow containerStyle={{ marginBottom: 10, padding: 10 }} key={n}>
+                        <Flexbox row containerStyle={{ justifyContent: 'flex-start' }}>
+                            <ReactPlaceholder showLoadingAnimation={true} type='round' ready={false} color='#E0E0E0' style={{ width: 50, height: 50, marginRight: 10 }}><div></div></ReactPlaceholder>
+                            <ReactPlaceholder showLoadingAnimation={true} type='text' ready={false} style={{ width: '50%' }} rows={3} color='#E0E0E0'><div></div></ReactPlaceholder>
                         </Flexbox>
-                    </div>
-                    <div style={{ minHeight: 300, padding: loading ? 30 : 0 }}>
-                        <ReactPlaceholder showLoadingAnimation={true} type='text' rows={3} ready={!loading}>
-                            <Chart lines={1} timeKey="date" dataKey="total_click" data={chartData.lot_impression}></Chart>
-                        </ReactPlaceholder>
-                    </div>
-                </Card>
-                <div>
-                    <Flexbox row spaceBetween>
-                        <h3 style={{ color: styles.grayColor, fontWeight: 300 }}>Awaiting Results</h3>
-                        <h2> <span style={{ color: styles.primaryColor, fontSize: 15 }}>UNCLAIMED CREDIT </span>${_.sumBy(awaitingAuctions, "unclaim_credit")}</h2>
-                    </Flexbox>
-                    <div>
-                        {loadingCompleted ?
-                            _.range(0, 3).map(n => (<LoadingAuction key={n}></LoadingAuction>)) :
-                            awaitingAuctions.map(auction => (
-                                <CompletedAuction onClick={this.detailAuction} key={auction.id} auction={auction}></CompletedAuction>
-                            ))
-                        }
-                    </div>
-                </div>
+                    </Card>)) :
+                    message.length > 0 ?
+                        <div className="error">
+                            {message}
+                        </div>
+                        :
+                        users.map(user =>
+                            <div onClick={() => this.detail(user)} key={user.id}>
+                                <Card noPadding shadow containerStyle={{ marginBottom: 10, padding: 10 }} >
+                                    <Flexbox row containerStyle={{ justifyContent: 'flex-start' }}>
+                                        <div className="avatar">
+                                            <img src={user.avatar_url} />
+                                        </div>
+                                        <div className="name">
+                                            {user.login}
+                                        </div>
+                                    </Flexbox>
+                                </Card>
+                            </div>)
+                }
             </div>
         );
     }
@@ -147,16 +64,15 @@ class Dashboard extends Component {
 
 export function mapStateToProps(state) {
     return {
-        summary: state.auctioneer.summary,
-        awaitingAuctions: state.auction.awaiting.list,
-        loadingCompleted: state.auction.awaiting.loading,
-        loading: state.auctioneer.loading
+        users: state.user.list,
+        loading: state.user.loading,
+        refreshing: state.user.refreshing,
+        message: state.user.message
     };
 }
 export function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        loadDashboard,
-        listAwaitingAuctions
+        listUsers
     }, dispatch)
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

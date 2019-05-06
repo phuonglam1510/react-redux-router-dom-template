@@ -13,10 +13,10 @@ class Header extends Component {
         return (
             <div className="header-container">
                 <Flexbox row spaceBetween>
-                    <h2><i>TRACTOR ZOOM</i></h2>
+                    <h2>Demo</h2>
                     {!noRight &&
-                        <Link to={ROUTES.NEW_AUCTION}>
-                            <Button backgroundColor="white" textColor={styles.primaryColor} text="New Auction"></Button>
+                        <Link to={ROUTES.LOGIN}>
+                            <Button backgroundColor="white" textColor={styles.primaryColor} text="Logout"></Button>
                         </Link>}
                 </Flexbox>
             </div>
