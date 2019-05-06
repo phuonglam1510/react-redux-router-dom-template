@@ -21,11 +21,6 @@ class Detail extends Component {
     componentDidMount() {
         this.load();
     }
-    back = () => {
-        const { history } = this.props;
-        console.log(history);
-        history.goBack({ state: { transition: 'out' } });
-    }
     load = async () => {
         const { match } = this.props;
         console.log(match);
