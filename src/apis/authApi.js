@@ -2,14 +2,15 @@
 import { request } from './request';
 
 export const login = (email, password) => {
-    // var currentDate = new Date();
-    // var time_zone = (currentDate.getTimezoneOffset() / -60);
-
-    return request('api/auth/signin/email', {
+    /*return request('api/auth/signin/email', {
         method: 'post',
         data: {
             email, password
         }
+    });*/
+
+    return new Promise(resolve => {
+        resolve({ id: 1, token: 'test_token', email })
     });
 }
 
